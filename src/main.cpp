@@ -169,5 +169,5 @@ void hsvToRgb(float h, float s, float v, int& r, int& g, int& b) {
 
   r = (r1 + m) * 255;
   g = (g1 + m) * 255;
-  b = (b1 + m) * 255;
+  b = (b1 + m) * 255; 
 }
