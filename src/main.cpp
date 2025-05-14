@@ -37,16 +37,18 @@ void setup() {
   pinMode(pinRC3, INPUT_PULLUP);
   pinMode(pinRC5, INPUT_PULLUP);
 
+  // 인터럽트 설정: 핀 값 변화 시 호출할 함수 등록
   attachPCINT(digitalPinToPCINT(pinRC1), pwmRC1, CHANGE);
   attachPCINT(digitalPinToPCINT(pinRC3), pwmRC3, CHANGE);
   attachPCINT(digitalPinToPCINT(pinRC5), pwmRC5, CHANGE);
 
+  // 출력 핀 설정
   pinMode(pinLED_PWM, OUTPUT);
   pinMode(pinLED_ONOFF, OUTPUT);
   pinMode(pinLED_R, OUTPUT);
   pinMode(pinLED_G, OUTPUT);
   pinMode(pinLED_B, OUTPUT);
-
+  // 초기 상태 설정
   analogWrite(pinLED_PWM, 0);
   digitalWrite(pinLED_ONOFF, LOW);
   digitalWrite(pinLED_R, LOW);
@@ -80,6 +82,7 @@ void loop() {
     bNewRC5Pulse = false;
   }
 
+  // 밝기 조절 처리 (CH3)
   if (ledEnabled && bNewRC3Pulse) {
     if (abs(prevRC3PulseWidth - nRC3PulseWidth) > 10) {
       int brightness = map(nRC3PulseWidth, 1000, 2000, 255, 0);
@@ -91,7 +94,7 @@ void loop() {
     }
     bNewRC3Pulse = false;
   }
-
+  // 색상 조절 처리 (CH1)
   if (ledEnabled && bNewRC1Pulse) {
     float hue = map(nRC1PulseWidth, 1000, 2000, 0, 360);
     int r, g, b;
@@ -111,6 +114,7 @@ void loop() {
   }
 }
 
+// CH1 입력 변화 감지 인터럽트 함수
 void pwmRC1() {
   if (digitalRead(pinRC1) == HIGH) {
     ulRC1StartHigh = micros();
@@ -122,7 +126,7 @@ void pwmRC1() {
     }
   }
 }
-
+// CH3 입력 변화 감지 인터럽트 함수
 void pwmRC3() {
   if (digitalRead(pinRC3) == HIGH) {
     ulRC3StartHigh = micros();
@@ -135,6 +139,7 @@ void pwmRC3() {
   }
 }
 
+// CH5 입력 변화 감지 인터럽트 함수
 void pwmRC5() {
   if (digitalRead(pinRC5) == HIGH) {
     ulRC5StartHigh = micros();
@@ -146,7 +151,9 @@ void pwmRC5() {
     }
   }
 }
-
+// HSV → RGB 변환 함수
+// h: 0~360도, s: 0~1, v: 0~1
+// 출력: r, g, b (0~255)
 void hsvToRgb(float h, float s, float v, int& r, int& g, int& b) {
   float c = v * s;
   float x = c * (1 - fabs(fmod(h / 60.0, 2) - 1));
@@ -166,7 +173,7 @@ void hsvToRgb(float h, float s, float v, int& r, int& g, int& b) {
   } else {
     r1 = c; g1 = 0; b1 = x;
   }
-
+ // 최종 RGB 값 반환 (0~255 스케일)
   r = (r1 + m) * 255;
   g = (g1 + m) * 255;
   b = (b1 + m) * 255; 
