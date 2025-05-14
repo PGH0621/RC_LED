@@ -5,6 +5,11 @@
 ## 유튜브 영상
 https://youtu.be/qZboEh_sRr8?si=mOmtKh2dSuq_Y3n5
 
+
+## 회로 사진
+![Uploading image.png…]()
+![Uploading image.png…]()
+
 ---
 
 ## 🔧 기능 요약
