@@ -1,6 +1,7 @@
 # 🎛️ RC 조종기 기반 RGB LED & 밝기 제어 시스템
 
 본 프로젝트는 RC 조종기의 3채널(PWM 신호)을 활용하여 RGB 색상, 밝기, LED ON/OFF를 실시간으로 제어하는 아두이노 기반 조명 제어 시스템입니다.
+https://youtu.be/qZboEh_sRr8?si=mOmtKh2dSuq_Y3n5
 
 ---
 
